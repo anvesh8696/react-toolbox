@@ -5,6 +5,7 @@ import { TABS } from '../identifiers.js';
 import InjectFontIcon from '../font_icon/FontIcon.js';
 import InjectTab from './Tab.js';
 import InjectTabContent from './TabContent.js';
+import utils from '../utils/utils.js';
 
 const factory = (Tab, TabContent, FontIcon) => {
   class Tabs extends Component {
@@ -53,7 +54,8 @@ const factory = (Tab, TabContent, FontIcon) => {
     }
 
     handleHeaderClick = (event) => {
-      const idx = parseInt(event.currentTarget.id);
+      const id = event.currentTarget.id;
+      const idx = parseInt(id.substring(id.lastIndexOf('_') + 1));
       if (this.props.onChange) this.props.onChange(idx);
     };
 
@@ -123,11 +125,11 @@ const factory = (Tab, TabContent, FontIcon) => {
       return {headers, contents};
     }
 
-    renderHeaders (headers) {
+    renderHeaders (headers, ariakey) {
       return headers.map((item, idx) => {
         return React.cloneElement(item, {
-          id: idx,
           key: idx,
+          ariakey: `${ariakey}_tab_${idx}`,
           theme: this.props.theme,
           active: this.props.index === idx,
           onClick: (event) => {
@@ -138,10 +140,11 @@ const factory = (Tab, TabContent, FontIcon) => {
       });
     }
 
-    renderContents (contents) {
+    renderContents (contents, ariakey) {
       const contentElements = contents.map((item, idx) => {
         return React.cloneElement(item, {
           key: idx,
+          ariakey: `${ariakey}_panel_${idx}`,
           theme: this.props.theme,
           active: this.props.index === idx,
           hidden: this.props.index !== idx && this.props.hideMode === 'display',
@@ -166,22 +169,25 @@ const factory = (Tab, TabContent, FontIcon) => {
         [theme.fixed]: fixed,
         [theme.inverse]: inverse
       }, className);
-
+      const ariakey = `tabs_${utils.ruuid()}`;
+      const aria = {
+        'role': 'tablist'
+      };
       return (
         <div data-react-toolbox='tabs' className={classNames}>
           <div className={theme.navigationContainer}>
             {hasLeftArrow && <div className={theme.arrowContainer} onClick={this.scrollRight}>
               <FontIcon className={theme.arrow} value="keyboard_arrow_left" />
             </div>}
-            <nav className={theme.navigation} ref={node => {this.navigationNode = node; }}>
-              {this.renderHeaders(headers)}
+            <nav {...aria} className={theme.navigation} ref={node => {this.navigationNode = node; }}>
+              {this.renderHeaders(headers, ariakey)}
               <span className={classNamePointer} style={this.state.pointer} />
             </nav>
             {hasRightArrow && <div className={theme.arrowContainer} onClick={this.scrollLeft}>
               <FontIcon className={theme.arrow} value="keyboard_arrow_right" />
             </div>}
           </div>
-          {this.renderContents(contents)}
+          {this.renderContents(contents, ariakey)}
         </div>
       );
     }

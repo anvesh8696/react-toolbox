@@ -6,6 +6,7 @@ import { TABS } from '../identifiers.js';
 class TabContent extends Component {
   static propTypes = {
     active: PropTypes.bool,
+    ariakey: PropTypes.string,
     children: PropTypes.node,
     className: PropTypes.string,
     tabIndex: PropTypes.number,
@@ -17,6 +18,7 @@ class TabContent extends Component {
 
   static defaultProps = {
     active: false,
+    ariakey: '',
     className: ''
   };
 
@@ -24,9 +26,15 @@ class TabContent extends Component {
     const className = classnames(this.props.theme.tab, {
       [this.props.theme.active]: this.props.active
     }, this.props.className);
-
+    const {active, ariakey, tabIndex} = this.props;
+    const aria = {
+      'role': 'tabpanel',
+      'id': ariakey,
+      'aria-labelledby': active ? ariakey.replace('_panel_', '_tab_') : null,
+      'aria-hidden': active.toString()
+    };
     return (
-      <section className={className} tabIndex={this.props.tabIndex}>
+      <section {...aria} className={className} tabIndex={tabIndex}>
         {this.props.children}
       </section>
     );

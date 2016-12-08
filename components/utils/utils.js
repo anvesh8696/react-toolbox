@@ -64,5 +64,9 @@ export default {
       .filter(k => k !== key)
       .forEach(k => { newObject[k] = object[k]; });
     return newObject;
+  },
+
+  ruuid (len = 6) {
+    return Math.random().toString(36).substr(2, len);
   }
 };

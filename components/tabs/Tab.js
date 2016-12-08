@@ -8,6 +8,7 @@ class Tab extends Component {
   static propTypes = {
     active: PropTypes.bool,
     activeClassName: PropTypes.string,
+    ariakey: PropTypes.string,
     className: PropTypes.string,
     disabled: PropTypes.bool,
     hidden: PropTypes.bool,
@@ -25,6 +26,7 @@ class Tab extends Component {
 
   static defaultProps = {
     active: false,
+    ariakey: '',
     className: '',
     disabled: false,
     hidden: false
@@ -45,7 +47,7 @@ class Tab extends Component {
   render () {
     const {
       onActive, // eslint-disable-line
-      active, activeClassName, className, disabled, hidden, label, icon, theme, ...other
+      active, activeClassName, ariakey, className, disabled, hidden, label, icon, theme, ...other
     } = this.props;
     const _className = classnames(theme.label, {
       [theme.active]: active,
@@ -55,9 +57,14 @@ class Tab extends Component {
       [theme.disabled]: disabled,
       [activeClassName]: active
     }, className);
-
+    const aria = {
+      'role': 'tab',
+      'id': ariakey,
+      'aria-controls': active ? ariakey.replace('_tab_', '_panel_') : null,
+      'aria-selected': active.toString()
+    };
     return (
-      <label {...other} data-react-toolbox='tab' className={_className} onClick={this.handleClick}>
+      <label {...other} {...aria} data-react-toolbox='tab' className={_className} onClick={this.handleClick}>
         {icon && <FontIcon className={theme.icon} value={icon}/>}
         {label}
       </label>

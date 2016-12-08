@@ -5,6 +5,7 @@ import { DIALOG } from '../identifiers.js';
 import ActivableRenderer from '../hoc/ActivableRenderer.js';
 import InjectButton from '../button/Button.js';
 import InjectOverlay from '../overlay/Overlay.js';
+import utils from '../utils/utils.js';
 
 const factory = (Overlay, Button) => {
   const Dialog = (props) => {
@@ -16,7 +17,11 @@ const factory = (Overlay, Button) => {
     const className = classnames([props.theme.dialog, props.theme[props.type]], {
       [props.theme.active]: props.active
     }, props.className);
-
+    const ariakey = `dialog_${utils.ruuid()}`;
+    const aria = {
+      'role': 'dialog',
+      'aria-labelledby': props.title ? `${ariakey}_title` : null
+    };
     return (
       <Overlay
         active={props.active}
@@ -26,9 +31,9 @@ const factory = (Overlay, Button) => {
         onMouseMove={props.onOverlayMouseMove}
         onMouseUp={props.onOverlayMouseUp}
       >
-        <div data-react-toolbox='dialog' className={className}>
-          <section role='body' className={props.theme.body}>
-            {props.title ? <h6 className={props.theme.title}>{props.title}</h6> : null}
+        <div {...aria} data-react-toolbox='dialog' className={className}>
+          <section className={props.theme.body}>
+            {props.title ? <h6 className={props.theme.title} id={aria['aria-labelledby']}>{props.title}</h6> : null}
             {props.children}
           </section>
           {actions.length

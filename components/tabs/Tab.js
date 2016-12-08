@@ -16,6 +16,7 @@ class Tab extends Component {
     label: PropTypes.node,
     onActive: PropTypes.func,
     onClick: PropTypes.func,
+    onKeyDown: PropTypes.func,
     theme: PropTypes.shape({
       active: PropTypes.string,
       disabled: PropTypes.string,
@@ -44,6 +45,12 @@ class Tab extends Component {
     }
   };
 
+  handleKeyDown = (event) => {
+    if (!this.props.disabled && this.props.onKeyDown) {
+      this.props.onKeyDown(event);
+    }
+  }
+
   render () {
     const {
       onActive, // eslint-disable-line
@@ -58,13 +65,14 @@ class Tab extends Component {
       [activeClassName]: active
     }, className);
     const aria = {
-      'role': 'tab',
-      'id': ariakey,
       'aria-controls': active ? ariakey.replace('_tab_', '_panel_') : null,
-      'aria-selected': active.toString()
+      'aria-selected': active.toString(),
+      'id': ariakey,
+      'role': 'tab',
+      'tabIndex': active ? 0 : -1
     };
     return (
-      <label {...other} {...aria} data-react-toolbox='tab' className={_className} onClick={this.handleClick}>
+      <label {...other} {...aria} data-react-toolbox='tab' className={_className} onClick={this.handleClick} onKeyDown={this.handleKeyDown}>
         {icon && <FontIcon className={theme.icon} value={icon}/>}
         {label}
       </label>

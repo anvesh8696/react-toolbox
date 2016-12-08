@@ -53,8 +53,7 @@ const factory = (Tab, TabContent, FontIcon) => {
       clearTimeout(this.resizeTimeout);
     }
 
-    handleHeaderClick = (event) => {
-      const id = event.currentTarget.id;
+    handleHeaderClick = (id) => {
       const idx = parseInt(id.substring(id.lastIndexOf('_') + 1));
       if (this.props.onChange) this.props.onChange(idx);
     };
@@ -133,8 +132,24 @@ const factory = (Tab, TabContent, FontIcon) => {
           theme: this.props.theme,
           active: this.props.index === idx,
           onClick: (event) => {
-            this.handleHeaderClick(event);
+            this.handleHeaderClick(event.currentTarget.id);
             item.props.onClick && item.props.onClick(event);
+          },
+          onKeyDown: (event) => {
+            const c = event.keyCode;
+            const dir = c === 37 || c === 38 ? -1 : c === 39 || c === 40 ? 1 : 0;
+            const max = headers.length;
+            let nidx = ((idx + dir) % max + max) % max;
+            if (nidx !== idx){
+              const id = event.currentTarget.id;
+              const next = headers[nidx];
+              if (this.navigationNode && this.navigationNode.children[nidx]) {
+                this.navigationNode.children[nidx].focus();
+              }
+              nidx = id.substring(0, id.lastIndexOf('_') + 1) + nidx;
+              this.handleHeaderClick(nidx);
+              next.props.onClick && next.props.onClick(event);
+            }
           }
         });
       });

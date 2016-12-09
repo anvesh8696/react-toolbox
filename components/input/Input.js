@@ -173,7 +173,8 @@ const factory = (FontIcon) => {
         required,
         type,
         value,
-        'aria-labelledby': ariakey
+        'aria-labelledby': ariakey,
+        'aria-invalid': error ? 'true' : 'false'
       };
       if (!multiline) {
         inputElementProps.maxLength = maxLength;

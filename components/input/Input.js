@@ -3,6 +3,7 @@ import classnames from 'classnames';
 import { themr } from 'react-css-themr';
 import { INPUT } from '../identifiers.js';
 import InjectedFontIcon from '../font_icon/FontIcon.js';
+import utils from '../utils/utils.js';
 
 const factory = (FontIcon) => {
   class Input extends React.Component {
@@ -160,6 +161,7 @@ const factory = (FontIcon) => {
         && value !== ''
         && !(typeof value === Number && isNaN(value));
 
+      const ariakey = `label_${utils.ruuid()}`;
       const inputElementProps = {
         ...others,
         className: classnames(theme.inputElement, {[theme.filled]: valuePresent}),
@@ -170,7 +172,8 @@ const factory = (FontIcon) => {
         disabled,
         required,
         type,
-        value
+        value,
+        'aria-labelledby': ariakey
       };
       if (!multiline) {
         inputElementProps.maxLength = maxLength;
@@ -186,7 +189,7 @@ const factory = (FontIcon) => {
           {icon ? <FontIcon className={theme.icon} value={icon} /> : null}
           <span className={theme.bar} />
           {labelText
-            ? <label className={labelClassName}>
+            ? <label className={labelClassName} id={ariakey}>
                 {labelText}
                 {required ? <span className={theme.required}> * </span> : null}
               </label>

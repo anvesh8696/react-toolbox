@@ -29,7 +29,7 @@ class TabContent extends Component {
     const {active, ariakey, tabIndex} = this.props;
     const aria = {
       'aria-labelledby': active ? ariakey.replace('_panel_', '_tab_') : null,
-      'aria-hidden': active.toString(),
+      'aria-hidden': (!active).toString(),
       'id': ariakey,
       'role': 'tabpanel'
     };

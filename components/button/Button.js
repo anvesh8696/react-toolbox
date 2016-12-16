@@ -9,6 +9,7 @@ const factory = (ripple, FontIcon) => {
   class Button extends Component {
     static propTypes = {
       accent: PropTypes.bool,
+      ariaIcon: PropTypes.bool,
       children: PropTypes.node,
       className: PropTypes.string,
       disabled: PropTypes.bool,
@@ -46,6 +47,7 @@ const factory = (ripple, FontIcon) => {
 
     static defaultProps = {
       accent: false,
+      ariaIcon: false,
       className: '',
       flat: false,
       floating: false,
@@ -67,7 +69,7 @@ const factory = (ripple, FontIcon) => {
     };
 
     render () {
-      const { accent, children, className, flat, floating, href, icon,
+      const { accent, ariaIcon, children, className, flat, floating, href, icon,
         inverse, label, mini, neutral, primary, theme, type, raised, ...others} = this.props;
       const element = href ? 'a' : 'button';
       const level = primary ? 'primary' : accent ? 'accent' : 'neutral';
@@ -78,6 +80,10 @@ const factory = (ripple, FontIcon) => {
         [theme.mini]: mini,
         [theme.inverse]: inverse
       }, className);
+
+      const aria = {
+        'aria-hidden': !ariaIcon
+      };
 
       const props = {
         ...others,
@@ -92,7 +98,7 @@ const factory = (ripple, FontIcon) => {
       };
 
       return React.createElement(element, props,
-        icon ? <FontIcon className={theme.icon} value={icon}/> : null,
+        icon ? <FontIcon {...aria} className={theme.icon} value={icon}/> : null,
         label,
         children
       );

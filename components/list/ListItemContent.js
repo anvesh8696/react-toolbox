@@ -14,7 +14,10 @@ const factory = (ListItemText) => {
         PropTypes.node
       ]),
       children: PropTypes.any,
-      legend: PropTypes.string,
+      legend: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.element
+      ]),
       theme: PropTypes.shape({
         itemContentRoot: PropTypes.string,
         large: PropTypes.string

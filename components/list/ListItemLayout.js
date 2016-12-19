@@ -50,7 +50,10 @@ const factory = (Avatar, ListItemContent, ListItemActions) => {
       PropTypes.string,
       PropTypes.element
     ]),
-    legend: PropTypes.string,
+    legend: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.element
+    ]),
     rightActions: PropTypes.array,
     rightIcon: PropTypes.oneOfType([
       PropTypes.string,

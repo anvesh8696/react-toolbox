@@ -1,8 +1,9 @@
 import React, { PropTypes } from 'react';
 import classnames from 'classnames';
 
-const FontIcon = ({ children, className, value, ...other}) => (
+const FontIcon = ({ ariaLabel, children, className, value, ...other}) => (
   <span
+    aria-label={ariaLabel}
     data-react-toolbox='font-icon'
     className={classnames({'material-icons': typeof value === 'string' || typeof children === 'string'}, className)}
     {...other}
@@ -13,6 +14,7 @@ const FontIcon = ({ children, className, value, ...other}) => (
 );
 
 FontIcon.propTypes = {
+  ariaLabel: PropTypes.string,
   children: PropTypes.any,
   className: PropTypes.string,
   value: PropTypes.oneOfType([

@@ -98,8 +98,8 @@ const factory = (ProgressBar, Input) => {
 
     handleKeyDown = (event) => {
       if ([13, 27].indexOf(event.keyCode) !== -1) this.getInput().blur();
-      if (event.keyCode === 38) this.addToValue(this.props.step);
-      if (event.keyCode === 40) this.addToValue(-this.props.step);
+      if ([38, 39].indexOf(event.keyCode) !== -1) this.addToValue(this.props.step);
+      if ([37, 40].indexOf(event.keyCode) !== -1) this.addToValue(-this.props.step);
     };
 
     handleMouseDown = (event) => {

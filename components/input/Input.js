@@ -195,7 +195,7 @@ const factory = (FontIcon) => {
                 {required ? <span className={theme.required}> * </span> : null}
               </label>
             : null}
-          {hint ? <span hidden={labelText} className={theme.hint}>{hint}</span> : null}
+          {hint ? <span hidden={labelText} className={theme.hint} id={labelText ? undefined : ariakey}>{hint}</span> : null}
           {error ? <span className={theme.error}>{error}</span> : null}
           {maxLength ? <span className={theme.counter}>{length}/{maxLength}</span> : null}
           {children}

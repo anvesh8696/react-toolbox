@@ -16,7 +16,7 @@ const factory = (Avatar, ListItemContent, ListItemActions) => {
 
     const leftActions = [
       props.leftIcon && <FontIcon value={props.leftIcon} key='leftIcon'/>,
-      props.avatar && <Avatar image={props.avatar} key='avatar'/>,
+      props.avatar && <Avatar title={props.avatarAlt} image={props.avatar} key='avatar'/>,
       ...props.leftActions
     ];
     const rightActions = [
@@ -40,6 +40,7 @@ const factory = (Avatar, ListItemContent, ListItemActions) => {
       PropTypes.string,
       PropTypes.element
     ]),
+    avatarAlt: PropTypes.string,
     caption: PropTypes.string,
     children: PropTypes.any,
     className: PropTypes.string,

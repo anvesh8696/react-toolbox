@@ -176,11 +176,11 @@ const factory = (FontIcon) => {
         'aria-invalid': error ? 'true' : 'false'
       };
       if (!multiline) {
-        inputElementProps.role = 'textbox';
-        inputElementProps['aria-multiline'] = 'true';
         inputElementProps.maxLength = maxLength;
         inputElementProps.onKeyPress = onKeyPress;
       } else {
+        inputElementProps.role = 'textbox';
+        inputElementProps['aria-multiline'] = 'true';
         inputElementProps.rows = rows;
         inputElementProps.onKeyPress = this.handleKeyPress;
       }

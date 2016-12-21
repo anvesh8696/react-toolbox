@@ -11,7 +11,7 @@ const factory = (FontIcon) => {
       {cover && typeof image === 'string' && <span alt={title} className={theme.image} style={{backgroundImage: `url(${image})`}} />}
       {!cover && (typeof image === 'string' ? <img alt={title} className={theme.image} src={image} title={title} /> : image)}
       {typeof icon === 'string' ? <FontIcon className={theme.letter} value={icon} /> : icon}
-      {title ? <span className={theme.letter}>{title[0]}</span> : null}
+      {title && !image ? <span className={theme.letter}>{title[0]}</span> : null}
     </div>
   );
 

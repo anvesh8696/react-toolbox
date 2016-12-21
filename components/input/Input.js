@@ -167,7 +167,6 @@ const factory = (FontIcon) => {
         className: classnames(theme.inputElement, {[theme.filled]: valuePresent}),
         onChange: this.handleChange,
         ref: 'input',
-        role: 'input',
         name,
         disabled,
         required,
@@ -177,6 +176,8 @@ const factory = (FontIcon) => {
         'aria-invalid': error ? 'true' : 'false'
       };
       if (!multiline) {
+        inputElementProps.role = 'textbox';
+        inputElementProps['aria-multiline'] = 'true';
         inputElementProps.maxLength = maxLength;
         inputElementProps.onKeyPress = onKeyPress;
       } else {

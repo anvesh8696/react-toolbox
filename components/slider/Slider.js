@@ -271,7 +271,6 @@ const factory = (ProgressBar, Input) => {
           data-react-toolbox='slider'
           onBlur={this.handleSliderBlur}
           onFocus={this.handleSliderFocus}
-          tabIndex='0'
           >
           <div
             ref='slider'

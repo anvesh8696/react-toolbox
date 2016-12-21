@@ -13,6 +13,7 @@ class ProgressBar extends Component {
     min: PropTypes.number,
     mode: PropTypes.oneOf(['determinate', 'indeterminate']),
     multicolor: PropTypes.bool,
+    role: PropTypes.string,
     theme: PropTypes.shape({
       buffer: PropTypes.string,
       circle: PropTypes.string,
@@ -80,7 +81,7 @@ class ProgressBar extends Component {
   }
 
   render () {
-    const { className, disabled, max, min, mode, multicolor, type, theme, value } = this.props;
+    const { className, disabled, max, min, mode, multicolor, role, type, theme, value } = this.props;
     const _className = classnames(theme[type], {
       [theme[mode]]: mode,
       [theme.multicolor]: multicolor
@@ -94,6 +95,8 @@ class ProgressBar extends Component {
         aria-valuemin={min}
         aria-valuemax={max}
         className={_className}
+        role={role || 'progressbar'}
+        tabIndex="0"
       >
         {type === 'circular' ? this.renderCircular() : this.renderLinear()}
       </div>
